@@ -4,6 +4,7 @@ import pygame
 import sys
 from settings import *
 import os
+from pac_class import *
 
 pygame.init()
 vec = pygame.math.Vector2
@@ -16,7 +17,9 @@ class App:
         self.clock  = pygame.time.Clock()
         self.running = True
         self.state = 'start'
+        self.pac = Pac(self,P_START_POS)
         self.run()
+
 
 
         self.load()
@@ -59,9 +62,9 @@ class App:
     
     def draw_grid(self):
         for x in range(WIDTH//cell_width):
-            pygame.draw.line(self.screen,GREY,(x*cell_width,0),(x*cell_width, HEIGHT))
+            pygame.draw.line(self.background,RED,(x*cell_width,0),(x*cell_width, HEIGHT))
         for y in range(HEIGHT//cell_height):
-            pygame.draw.line(self.background, GREY,(0, y*cell_height), (WIDTH, y*cell_height))
+            pygame.draw.line(self.background,RED,(0, y*cell_height), (WIDTH, y*cell_height))
 
 
 
@@ -106,8 +109,12 @@ class App:
 
     def playing_draw(self):
         self.load()
+        self.screen.fill(BLACK)
         self.screen.blit(self.background,(TOP_BOTTOM_MARGIN//2,TOP_BOTTOM_MARGIN//2))
 #        print('called')
         self.draw_grid()
+        self.draw_text('HIGH SCORE: 0',self.screen,18,[10,5],GREEN,START_FONT)
+        self.draw_text('CURRENT SCORE: 0', self.screen,18, [WIDTH//2, 5], GREEN, START_FONT)
+        self.pac.draw()
         pygame.display.update()
  
