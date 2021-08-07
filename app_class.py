@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+#coding: utf8 
 import pygame
 import sys
 from settings import *
@@ -52,14 +54,14 @@ class App:
         screen.blit(printing, pos)
 
     def load(self):
-        self.background = pygame.image.load('maze.png')
-        self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
+        self.background = pygame.image.load(MAZE_PATH)
+        self.background = pygame.transform.scale(self.background, (MAZE_W, MAZE_H))
     
     def draw_grid(self):
         for x in range(WIDTH//cell_width):
             pygame.draw.line(self.screen,GREY,(x*cell_width,0),(x*cell_width, HEIGHT))
         for y in range(HEIGHT//cell_height):
-            pygame.draw.line(self.screen, GREY,(0, y*cell_height), (WIDTH, y*cell_height))
+            pygame.draw.line(self.background, GREY,(0, y*cell_height), (WIDTH, y*cell_height))
 
 
 
@@ -86,7 +88,7 @@ class App:
         self.draw_text('1 PLAYER MODE ONLY', self.screen, 22, [WIDTH//2, HEIGHT//2 + 50], (44, 168, 198), START_FONT, centred=True)
         self.draw_text('© 2021 Kartikeya Srivastava', self.screen, 22, [WIDTH//2, HEIGHT//2 + 100], (255, 255, 0), START_FONT, centred = True)
         self.draw_text('HIGH SCORE', self.screen, 12, [5,0], (0, 255, 0), START_FONT)
-        self.draw_text('1P', self.screen, 12, [410, 0], (0, 255, 0), START_FONT)
+        self.draw_text('1P', self.screen, 12, [580, 0], (0, 255, 0), START_FONT)
 
                        
         pygame.display.update()
@@ -104,7 +106,7 @@ class App:
 
     def playing_draw(self):
         self.load()
-        self.screen.blit(self.background,(0,0))
+        self.screen.blit(self.background,(TOP_BOTTOM_MARGIN//2,TOP_BOTTOM_MARGIN//2))
 #        print('called')
         self.draw_grid()
         pygame.display.update()

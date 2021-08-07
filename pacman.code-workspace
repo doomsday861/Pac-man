@@ -1,8 +1,13 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": "/Users/kartikeya/Documents/GitHub/Pac-man/"
 		}
 	],
-	"settings": {}
+	"settings": {
+	"env": {
+		"PYTHONPATH": "${workspaceRoot}"
+	}		
+
+	}
 }
