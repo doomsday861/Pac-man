@@ -15,9 +15,9 @@ GREY = (107,107,107)
 GREEN =(0,255,0)
 #START SCREEN SETTINGS
 START_TEXT_SIZE = 32
-START_FONT = '/Users/kartikeya/Documents/GitHub/Pac-man/PressStart2P-vaV7.ttf'
+START_FONT = 'PressStart2P-vaV7.ttf'
 #MAZE PATH CHANGE ON WINDOWS (ONLY FOR OSX FOR NOW)
-MAZE_PATH = '/Users/kartikeya/Documents/GitHub/Pac-man/maze.png'
+MAZE_PATH = 'maze.png'
 #PLAYER SETTINGS
 P_START_POS = vec(1,1)
 print('setting call')

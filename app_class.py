@@ -5,7 +5,7 @@ import sys
 from settings import *
 import os
 from pac_class import *
-
+from wallreader import *
 pygame.init()
 vec = pygame.math.Vector2
 
@@ -19,11 +19,13 @@ class App:
         self.state = 'start'
         self.pac = Pac(self,P_START_POS)
         self.walls = []
+        self.dancer = wallreader.walread(self)
+        print('wall size is '+str(len(self.walls)))
         self.run()
 
 
 
-        self.load()
+ #       self.load()
     def run(self):
  #       print('call run')
         while self.running:
@@ -62,13 +64,7 @@ class App:
         self.background = pygame.transform.scale(self.background, (MAZE_W, MAZE_H))
 
         #WALLS ON THE GRID COORDINATES
-        with open("walls.txt","r") as file:
-            for yidx, line in enumerate(file):
-                for xidx, char in enumerate(line):
-                    if char == '1':
-                        self.walls.append(vec(xidx,yidx))
-        
-        print('wall size is '+str(len(self.walls)))
+ 
     
     def draw_grid(self):
         for x in range(WIDTH//cell_width):
