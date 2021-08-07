@@ -103,16 +103,17 @@ class App:
             if event.type == pygame.QUIT:
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                if event.type == pygame.K_UP:
+                print(pygame.key.name)
+                if event.key == pygame.K_UP:
                     print('up press')
                     self.pac.move(vec(0,-1))
-                if event.type == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN:
                     print('down press')
                     self.pac.move(vec(0, 1))
-                if event.type == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT:
                     print('left press')
                     self.pac.move(vec(-1, 0))
-                if event.type == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT:
                     print('right press')
                     self.pac.move(vec(1, 0))
 

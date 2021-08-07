@@ -19,5 +19,5 @@ START_FONT = '/Users/kartikeya/Documents/GitHub/Pac-man/PressStart2P-vaV7.ttf'
 #MAZE PATH CHANGE ON WINDOWS (ONLY FOR OSX FOR NOW)
 MAZE_PATH = '/Users/kartikeya/Documents/GitHub/Pac-man/maze.png'
 #PLAYER SETTINGS
-P_START_POS = vec(1,10)
+P_START_POS = vec(1,1)
 print('setting call')
