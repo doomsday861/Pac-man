@@ -102,10 +102,23 @@ class App:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            if event.type == pygame.KEYDOWN:
+                if event.type == pygame.K_UP:
+                    print('up press')
+                    self.pac.move(vec(0,-1))
+                if event.type == pygame.K_DOWN:
+                    print('down press')
+                    self.pac.move(vec(0, 1))
+                if event.type == pygame.K_LEFT:
+                    print('left press')
+                    self.pac.move(vec(-1, 0))
+                if event.type == pygame.K_RIGHT:
+                    print('right press')
+                    self.pac.move(vec(1, 0))
 
 
     def playing_update(self):
-        pass
+        self.pac.update()
 
     def playing_draw(self):
         self.load()
