@@ -18,6 +18,7 @@ class App:
         self.running = True
         self.state = 'start'
         self.pac = Pac(self,P_START_POS)
+        self.walls = []
         self.run()
 
 
@@ -59,6 +60,15 @@ class App:
     def load(self):
         self.background = pygame.image.load(MAZE_PATH)
         self.background = pygame.transform.scale(self.background, (MAZE_W, MAZE_H))
+
+        #WALLS ON THE GRID COORDINATES
+        with open("walls.txt","r") as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == '1':
+                        self.walls.append(vec(xidx,yidx))
+        
+        print('wall size is '+str(len(self.walls)))
     
     def draw_grid(self):
         for x in range(WIDTH//cell_width):
@@ -103,7 +113,7 @@ class App:
             if event.type == pygame.QUIT:
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                print(pygame.key.name)
+#                print(pygame.key.name)
                 if event.key == pygame.K_UP:
                     print('up press')
                     self.pac.move(vec(0,-1))
