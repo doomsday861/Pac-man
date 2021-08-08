@@ -21,6 +21,7 @@ class App:
         self.walls = []
         self.dancer = wallreader.walread(self)
         print('wall size is '+str(len(self.walls)))
+#        print(self.walls)
         self.run()
 
 
