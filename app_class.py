@@ -19,6 +19,7 @@ class App:
         self.state = 'start'
         self.pac = Pac(self,P_START_POS)
         self.walls = []
+        self.coins = []
         self.dancer = wallreader.walread(self)
         print('wall size is '+str(len(self.walls)))
 #        print(self.walls)
@@ -72,7 +73,8 @@ class App:
             pygame.draw.line(self.background,RED,(x*cell_width,0),(x*cell_width, HEIGHT))
         for y in range(HEIGHT//cell_height):
             pygame.draw.line(self.background,RED,(0, y*cell_height), (WIDTH, y*cell_height))
-
+        for coin in self.coins:
+            pygame.draw.rect(self.background,(167,179,34),(coin.x * cell_width, coin.y * cell_height,cell_width,cell_height))
 
 
 
@@ -131,11 +133,19 @@ class App:
     def playing_draw(self):
         self.load()
         self.screen.fill(BLACK)
+#        self.draw_grid()
         self.screen.blit(self.background,(TOP_BOTTOM_MARGIN//2,TOP_BOTTOM_MARGIN//2))
+        self.draw_coins()
 #        print('called')
-        self.draw_grid()
         self.draw_text('HIGH SCORE: 0',self.screen,18,[10,5],GREEN,START_FONT)
         self.draw_text('CURRENT SCORE: 0', self.screen,18, [WIDTH//2, 5], GREEN, START_FONT)
         self.pac.draw()
         pygame.display.update()
+        # self.coins.pop()
  
+###COIN STUFF###
+    def draw_coins(self):
+        for coin in self.coins:
+            pygame.draw.circle(self.screen, (124, 123, 7),
+                               (int(coin.x*cell_width)+cell_width//2+TOP_BOTTOM_MARGIN//2,
+                                int(coin.y*cell_height)+cell_height//2+TOP_BOTTOM_MARGIN//2), 5)

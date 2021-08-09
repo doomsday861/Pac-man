@@ -31,7 +31,7 @@ class Pac:
     
     def draw(self):
         pygame.draw.circle(self.app.screen,GREEN,(int(self.pix_pos.x),int(self.pix_pos.y)),cell_width//2-2)
-        pygame.draw.rect(self.app.screen,RED,(int(self.grid_pos[0]*cell_width+TOP_BOTTOM_MARGIN//2),int(self.grid_pos[1]*cell_height+TOP_BOTTOM_MARGIN//2),cell_width,cell_height),1)
+        # pygame.draw.rect(self.app.screen,RED,(int(self.grid_pos[0]*cell_width+TOP_BOTTOM_MARGIN//2),int(self.grid_pos[1]*cell_height+TOP_BOTTOM_MARGIN//2),cell_width,cell_height),1)
    
    
     def move(self,direction):

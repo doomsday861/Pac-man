@@ -7,4 +7,5 @@ class wallreader:
                 for xidx, char in enumerate(line):
                     if char == '1':
                         self.walls.append(vec(xidx, yidx))
-
+                    if char =='C':
+                        self.coins.append(vec(xidx, yidx))
