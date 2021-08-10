@@ -138,7 +138,7 @@ class App:
         self.draw_coins()
 #        print('called')
         self.draw_text('HIGH SCORE: 0',self.screen,18,[10,5],GREEN,START_FONT)
-        self.draw_text('CURRENT SCORE: 0', self.screen,18, [WIDTH//2, 5], GREEN, START_FONT)
+        self.draw_text('CURRENT SCORE: {}'.format(self.pac.current_score), self.screen,18, [WIDTH//2, 5], GREEN, START_FONT)
         self.pac.draw()
         pygame.display.update()
         # self.coins.pop()

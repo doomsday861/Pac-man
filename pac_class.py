@@ -1,5 +1,6 @@
 from settings import *
 import pygame
+import app_class
 vec = pygame.math.Vector2
 class Pac:
     def __init__(self,app,pos):
@@ -11,6 +12,7 @@ class Pac:
         self.stored_direction = None
         self.able_to_move = True
         self.speed = 2
+        self.current_score =0
  
     def update(self):
         if self.able_to_move:
@@ -21,7 +23,9 @@ class Pac:
 
             self.able_to_move = self.can_move()
 
- 
+        if self.on_coin():
+            self.eat_coin()
+
  
         #THE RECTANGLE GRID TRACKING
         self.grid_pos[0] = (self.pix_pos[0]-TOP_BOTTOM_MARGIN +
@@ -57,3 +61,14 @@ class Pac:
                 if vec(self.grid_pos+self.direction) == wall:
                     return False
             return True
+
+    def on_coin(self):
+        if self.grid_pos in self.app.coins:
+#             print('coin pass')
+#             self.app.coins.remove(self.grid_pos)
+            return True
+        return False
+        
+    def eat_coin(self):
+        self.app.coins.remove(self.grid_pos)
+        self.current_score +=1
