@@ -78,8 +78,8 @@ class App:
 
 
     def make_ghosts(self):
-        for pos in self.g_pos:
-            self.ghosts.append(Ghost(self,pos))
+        for idx,pos in enumerate(self.g_pos):
+            self.ghosts.append(Ghost(self,pos,idx))
     
     def draw_grid(self):
         for x in range(WIDTH//cell_width):
