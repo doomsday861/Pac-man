@@ -6,6 +6,7 @@ from settings import *
 import os
 from pac_class import *
 from wallreader import *
+from ghost_class import *
 pygame.init()
 vec = pygame.math.Vector2
 
@@ -20,9 +21,13 @@ class App:
         self.pac = Pac(self,P_START_POS)
         self.walls = []
         self.coins = []
+        self.ghosts =[]
+        self.g_pos =[]
         self.dancer = wallreader.walread(self)
-        print('wall size is '+str(len(self.walls)))
+#        print('wall size is '+str(len(self.walls)))
 #        print(self.walls)
+ #       print(self.g_pos)
+        self.make_ghosts()
         self.run()
 
 
@@ -64,9 +69,17 @@ class App:
     def load(self):
         self.background = pygame.image.load(MAZE_PATH)
         self.background = pygame.transform.scale(self.background, (MAZE_W, MAZE_H))
+        with open("walls.txt", "r") as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == 'B':
+                        pygame.draw.rect(
+                            self.background, BLACK, (xidx*cell_width, yidx*cell_height, cell_width, cell_height))
 
-        #WALLS ON THE GRID COORDINATES
- 
+
+    def make_ghosts(self):
+        for pos in self.g_pos:
+            self.ghosts.append(Ghost(self,pos))
     
     def draw_grid(self):
         for x in range(WIDTH//cell_width):
@@ -129,6 +142,8 @@ class App:
 
     def playing_update(self):
         self.pac.update()
+        for ghost in self.ghosts:
+            ghost.update()
 
     def playing_draw(self):
         self.load()
@@ -140,6 +155,8 @@ class App:
         self.draw_text('HIGH SCORE: 0',self.screen,18,[10,5],GREEN,START_FONT)
         self.draw_text('CURRENT SCORE: {}'.format(self.pac.current_score), self.screen,18, [WIDTH//2, 5], GREEN, START_FONT)
         self.pac.draw()
+        for ghost in self.ghosts:
+            ghost.draw()
         pygame.display.update()
         # self.coins.pop()
  

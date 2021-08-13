@@ -66,7 +66,12 @@ class Pac:
         if self.grid_pos in self.app.coins:
 #             print('coin pass')
 #             self.app.coins.remove(self.grid_pos)
-            return True
+                if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % cell_width == 0:
+                    if self.direction == vec(1, 0) or self.direction == vec(-1, 0) or self.direction == vec(0, 0):
+                        return True
+                if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % cell_height == 0:
+                    if self.direction == vec(0, 1) or self.direction == vec(0, -1) or self.direction == vec(0, 0):
+                        return True
         return False
         
     def eat_coin(self):
