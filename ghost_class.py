@@ -43,7 +43,12 @@ class Ghost:
     def move(self):
         if self.personality == 'random':
             self.direction = self.get_random_direction()
-
+        if self.personality == 'slow':
+            self.direction = self.get_path_direction()
+        if self.personality == 'speedy':
+            self.direction = self.get_path_direction()
+        if self.personality == 'scared':
+            self.direction = self.get_path_direction()
 
     def get_random_direction(self):
         while True:
@@ -61,6 +66,54 @@ class Ghost:
             if vec(cur.x + self.grid_pos.x, cur.y + self.grid_pos.y) not in self.app.walls:
                 break
         return vec(x_dir,y_dir)
+
+    def get_path_direction(self):
+        curr_cell = self.next_cell()
+        xdir = curr_cell[0] - self.grid_pos[0]
+        ydir = curr_cell[1] - self.grid_pos[1]
+        return vec(xdir, ydir)
+    
+    def next_cell(self):
+        path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)],[int(self.app.pac.grid_pos.x),int(self.app.pac.grid_pos.y)])
+        return path[1]
+
+    def BFS(self,start, target):
+        grid = [[0 for x in range(28)] for x in range(30)]
+        for cell in self.app.walls:
+            if cell.x < 28 and cell.y < 30:
+                grid[int(cell.y)][int(cell.x)]  = 1
+            
+        queue = [start]
+        path =[]    
+        vis = []
+        while queue:
+            current = queue[0]
+            queue.remove(queue[0])
+            vis.append(current)
+            
+            if current == target:
+                break
+            
+            else:
+                neighbours = [[0,-1],[1,0],[0,1],[-1,0]]
+                for neighbour in neighbours:
+                    if neighbour[0] + current[0] >=0 and neighbour[0] + current[0] < len(grid[0]):
+                        if neighbour[1] + current[1] >= 0 and neighbour[1] + current[1] < len(grid):
+                            next_cell = [neighbour[0] + current[0],neighbour[1] + current[1]]
+                            if next_cell not in vis:
+                                if grid[next_cell[1]][next_cell[0]] != 1:
+                                    queue.append(next_cell)
+                                    path.append({"Current": current, "Next": next_cell})
+        
+        shortest = [target]
+        while target != start:
+            for step in path:
+                if step["Next"] == target:
+                    target = step["Current"]
+                    shortest.insert(0,step["Current"]) 
+        
+        return shortest
+
 
 
 
