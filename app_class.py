@@ -127,16 +127,16 @@ class App:
             if event.type == pygame.KEYDOWN:
 #                print(pygame.key.name)
                 if event.key == pygame.K_UP:
-                    print('up press')
+                    # print('up press')
                     self.pac.move(vec(0,-1))
                 if event.key == pygame.K_DOWN:
-                    print('down press')
+                    # print('down press')
                     self.pac.move(vec(0, 1))
                 if event.key == pygame.K_LEFT:
-                    print('left press')
+                    # print('left press')
                     self.pac.move(vec(-1, 0))
                 if event.key == pygame.K_RIGHT:
-                    print('right press')
+                    # print('right press')
                     self.pac.move(vec(1, 0))
 
 
