@@ -13,6 +13,7 @@ class Pac:
         self.able_to_move = True
         self.speed = 2
         self.current_score =0
+        self.lives = 3
  
     def update(self):
         if self.able_to_move:
@@ -36,7 +37,8 @@ class Pac:
     def draw(self):
         pygame.draw.circle(self.app.screen,GREEN,(int(self.pix_pos.x),int(self.pix_pos.y)),cell_width//2-2)
         # pygame.draw.rect(self.app.screen,RED,(int(self.grid_pos[0]*cell_width+TOP_BOTTOM_MARGIN//2),int(self.grid_pos[1]*cell_height+TOP_BOTTOM_MARGIN//2),cell_width,cell_height),1)
-   
+        for x in range (self.lives):
+            pygame.draw.circle(self.app.screen,GREEN,(30 + 15*x,HEIGHT- 15),7)
    
     def move(self,direction):
  #       print('brooooo workkk')

@@ -15,13 +15,18 @@ class Ghost:
         self.colour = self.set_colour()
         self.direction = vec(0,0)
         self.personality = self.set_personality()
-        print(self.personality)
+#        print(self.personality)
+        self.target = None
+        self.speed = self.set_speed()
 
     def update(self):
-        self.pix_pos +=self.direction
+        self.target = self.set_target()
 
-        if self.time_to_move():
-            self.move()
+        if self.target != self.grid_pos:
+            self.pix_pos +=self.direction * self.speed
+
+            if self.time_to_move():
+                self.move()
 
             #THE RECTANGLE GRID TRACKING
         self.grid_pos[0] = (self.pix_pos[0]-TOP_BOTTOM_MARGIN +
@@ -32,23 +37,45 @@ class Ghost:
     def draw(self):
         pygame.draw.circle(self.app.screen,self.colour,(int(self.pix_pos.x), int(self.pix_pos.y)),self.radius)
 
+
+    def set_speed(self):
+        if self.personality == 'speedy':
+            return 2
+        else:
+            return 1
+
     def time_to_move(self):
         if int(self.pix_pos.x+TOP_BOTTOM_MARGIN//2) % cell_width == 0:
-            if self.direction == vec(1, 0) or self.direction == vec(-1, 0) or self.direction == vec(0, 0):
+            if self.direction == vec(1, 0) or self.direction == vec(-1, 0) or self.direction == vec(0, 0) or self.direction == vec(0,0):
                 return True
         if int(self.pix_pos.y+TOP_BOTTOM_MARGIN//2) % cell_height == 0:
-            if self.direction == vec(0, 1) or self.direction == vec(0, -1) or self.direction == vec(0, 0):
+            if self.direction == vec(0, 1) or self.direction == vec(0, -1) or self.direction == vec(0, 0) or self.direction == vec(0,0):
                 return True
     
+    def set_target(self):
+        if self.personality == 'speedy' or self.personality == 'slow':
+            return self.app.pac.grid_pos
+        else:
+            if self.app.pac.grid_pos.x > COLS//2 and self.app.pac.grid_pos.y > ROWS//2:
+                return vec(1,1)
+            elif self.app.pac.grid_pos.x > COLS//2 and self.app.pac.grid_pos.y < ROWS//2:
+                return vec(1, ROWS-2)
+            elif self.app.pac.grid_pos.x < COLS//2 and self.app.pac.grid_pos.y > ROWS//2:
+                return vec(COLS-2, 1)
+            else:
+                return vec(COLS-2, ROWS-2)
+
+
+
     def move(self):
         if self.personality == 'random':
             self.direction = self.get_random_direction()
         if self.personality == 'slow':
-            self.direction = self.get_path_direction()
+            self.direction = self.get_path_direction(self.target)
         if self.personality == 'speedy':
-            self.direction = self.get_path_direction()
+            self.direction = self.get_path_direction(self.target)
         if self.personality == 'scared':
-            self.direction = self.get_path_direction()
+            self.direction = self.get_path_direction(self.target)
 
     def get_random_direction(self):
         while True:
@@ -67,14 +94,17 @@ class Ghost:
                 break
         return vec(x_dir,y_dir)
 
-    def get_path_direction(self):
-        curr_cell = self.next_cell()
+    def get_path_direction(self,target):
+        curr_cell = self.next_cell(target)
         xdir = curr_cell[0] - self.grid_pos[0]
         ydir = curr_cell[1] - self.grid_pos[1]
         return vec(xdir, ydir)
     
-    def next_cell(self):
-        path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)],[int(self.app.pac.grid_pos.x),int(self.app.pac.grid_pos.y)])
+    def next_cell(self,target):
+        # print(self.personality)
+        # print("grid pos"+str(type(self.grid_pos)))
+        # print("target type "+str(type(self.target)))
+        path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)],[int(self.target.x),int(self.target.y)])
         return path[1]
 
     def BFS(self,start, target):

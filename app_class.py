@@ -145,6 +145,11 @@ class App:
         for ghost in self.ghosts:
             ghost.update()
 
+        for ghost in self.ghosts:
+            if ghost.grid_pos == self.pac.grid_pos:
+                self.remove_life()
+            
+
     def playing_draw(self):
         self.load()
         self.screen.fill(BLACK)
@@ -159,7 +164,16 @@ class App:
             ghost.draw()
         pygame.display.update()
         # self.coins.pop()
- 
+    
+    def remove_life(self):
+        self.pac.lives -=1
+        if self.pac.lives == 0:
+            self.state = 'game over'
+        else:
+            # print(self.pac.lives)
+            self.pac.grid_pos = P_START_POS
+            self.pac.pix_pos = self.pac.get_pix_pos()
+            self.pac.direction *=0
 ###COIN STUFF###
     def draw_coins(self):
         for coin in self.coins:
