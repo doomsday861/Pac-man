@@ -144,7 +144,7 @@ class Ghost:
         
         return shortest
 
-
+#lives dont work man idk wtf to do
 
 
     def get_pix_pos(self):
