@@ -9,6 +9,7 @@ class Ghost:
     def __init__(self , app , pos ,number):
         self.app = app
         self.grid_pos = pos
+        self.starting_pos = [pos.x,pos.y]
         self.pix_pos = self.get_pix_pos()
         self.radius = int(cell_width//2.3)
         self.number = number
@@ -56,11 +57,11 @@ class Ghost:
         if self.personality == 'speedy' or self.personality == 'slow':
             return self.app.pac.grid_pos
         else:
-            if self.app.pac.grid_pos.x > COLS//2 and self.app.pac.grid_pos.y > ROWS//2:
+            if self.app.pac.grid_pos[0] > COLS//2 and self.app.pac.grid_pos[1] > ROWS//2:
                 return vec(1,1)
-            elif self.app.pac.grid_pos.x > COLS//2 and self.app.pac.grid_pos.y < ROWS//2:
+            elif self.app.pac.grid_pos[0] > COLS//2 and self.app.pac.grid_pos[1] < ROWS//2:
                 return vec(1, ROWS-2)
-            elif self.app.pac.grid_pos.x < COLS//2 and self.app.pac.grid_pos.y > ROWS//2:
+            elif self.app.pac.grid_pos[0] < COLS//2 and self.app.pac.grid_pos[1] > ROWS//2:
                 return vec(COLS-2, 1)
             else:
                 return vec(COLS-2, ROWS-2)
@@ -104,7 +105,7 @@ class Ghost:
         # print(self.personality)
         # print("grid pos"+str(type(self.grid_pos)))
         # print("target type "+str(type(self.target)))
-        path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)],[int(self.target.x),int(self.target.y)])
+        path = self.BFS([int(self.grid_pos.x), int(self.grid_pos.y)],[int(self.target[0]),int(self.target[1 ])])
         return path[1]
 
     def BFS(self,start, target):
@@ -148,11 +149,11 @@ class Ghost:
 
 
     def get_pix_pos(self):
-        print(self.grid_pos)
+#        print(self.grid_pos)
         return vec((self.grid_pos[0]*cell_width)+TOP_BOTTOM_MARGIN//2+cell_width//2, (self.grid_pos[1]*cell_height)+TOP_BOTTOM_MARGIN//2+cell_height//2)
 
     def set_colour(self):
-        print(self.number)
+#        print(self.number)
         if self.number == 0:
             return (0,0,255)
         if self.number == 1:

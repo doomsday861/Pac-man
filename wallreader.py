@@ -10,5 +10,4 @@ class wallreader:
                     if char =='C':
                         self.coins.append(vec(xidx, yidx))
                     if char in ["2","3","4","5"]:
-                        self.g_pos.append(vec(xidx,yidx))
-                    
+                        self.g_pos.append([xidx,yidx])

@@ -2,6 +2,8 @@
 #coding: utf8 
 import pygame
 import sys
+
+from pygame.constants import KEYDOWN
 from settings import *
 import os
 from pac_class import *
@@ -18,7 +20,7 @@ class App:
         self.clock  = pygame.time.Clock()
         self.running = True
         self.state = 'start'
-        self.pac = Pac(self,P_START_POS)
+        self.pac = Pac(self,vec(P_START_POS))
         self.walls = []
         self.coins = []
         self.ghosts =[]
@@ -44,6 +46,10 @@ class App:
                 self.playing_events()
                 self.playing_update()
                 self.playing_draw()
+            elif self.state == 'game over':
+                self.game_over_events()
+                self.game_over_update()
+                self.game_over_draw()
             else:
                 self.running = False
             self.clock.tick(FPS)
@@ -79,7 +85,7 @@ class App:
 
     def make_ghosts(self):
         for idx,pos in enumerate(self.g_pos):
-            self.ghosts.append(Ghost(self,pos,idx))
+            self.ghosts.append(Ghost(self,vec(pos),idx))
     
     def draw_grid(self):
         for x in range(WIDTH//cell_width):
@@ -117,6 +123,28 @@ class App:
 
                        
         pygame.display.update()
+
+    def reset(self):
+        self.pac.lives = 3 
+        self.pac.grid_pos = vec(P_START_POS)
+        self.pac.pix_pos = self.pac.get_pix_pos()
+        self.pac.direction *=0
+        self.pac.current_score =0
+        self.coins =[]
+        for ghost in self.ghosts:
+            ghost.grid_pos = vec(ghost.starting_pos)
+            ghost.pix_pos = ghost.get_pix_pos()
+            ghost.direction *= 0
+        with open("walls.txt", "r") as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == '1':
+                        self.walls.append(vec(xidx, yidx))
+                    if char =='C':
+                        self.coins.append(vec(xidx, yidx))
+                    if char in ["2","3","4","5"]:
+                        self.g_pos.append([xidx,yidx])
+        self.state = 'playing'
 
 ###################PLAYING DEFS #################
 
@@ -171,12 +199,44 @@ class App:
             self.state = 'game over'
         else:
             # print(self.pac.lives)
-            self.pac.grid_pos = P_START_POS
+            self.pac.grid_pos = vec(self.pac.starting_pos)
             self.pac.pix_pos = self.pac.get_pix_pos()
             self.pac.direction *=0
+            for ghost in self.ghosts:
+                ghost.grid_pos = vec(ghost.starting_pos)
+                ghost.pix_pos = ghost.get_pix_pos()
+                ghost.direction *=0
 ###COIN STUFF###
     def draw_coins(self):
         for coin in self.coins:
             pygame.draw.circle(self.screen, (124, 123, 7),
                                (int(coin.x*cell_width)+cell_width//2+TOP_BOTTOM_MARGIN//2,
                                 int(coin.y*cell_height)+cell_height//2+TOP_BOTTOM_MARGIN//2), 5)
+
+
+###################GAME OVER DEFS #################
+
+    def game_over_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False 
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.reset()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.running = False
+
+    def game_over_update(self):
+        pass
+
+    def game_over_draw(self):
+        self.screen.fill(BLACK)
+        quit_text = "Press ESCAPE to QUIT"
+        again_text = "Press SPACE BAR TO PLAY AGAIN"
+        self.draw_text('GAME OVER ', self.screen, 198, [WIDTH//2, HEIGHT//2], RED, START_FONT, centred=True)
+        self.draw_text(quit_text, self.screen, 58, [
+                       WIDTH//2, HEIGHT//2+100], (135,123,251), START_FONT, centred=True)
+        self.draw_text(again_text, self.screen, 58, [
+                       WIDTH//2, HEIGHT//2+50], (255, 255, 0), START_FONT, centred=True)
+
+
+        pygame.display.update()

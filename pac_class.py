@@ -3,17 +3,17 @@ import pygame
 import app_class
 vec = pygame.math.Vector2
 class Pac:
-    def __init__(self,app,pos):
+    def __init__(self,app,pos): 
         self.app = app
         self.grid_pos = pos
-        self.starting_pos = [pos.x,pos.y]
+        self.starting_pos = pos   
         self.pix_pos = self.get_pix_pos()
         self.direction = vec(1,0)
         self.stored_direction = None
         self.able_to_move = True
         self.speed = 2
         self.current_score =0
-        self.lives = 3
+        self.lives = 1
  
     def update(self):
         if self.able_to_move:

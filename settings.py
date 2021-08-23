@@ -22,5 +22,5 @@ START_FONT = 'PressStart2P-vaV7.ttf'
 #MAZE PATH CHANGE ON WINDOWS (ONLY FOR OSX FOR NOW)
 MAZE_PATH = 'maze.png'
 #PLAYER SETTINGS
-P_START_POS = vec(1,1)
-print('setting call')
+P_START_POS = [1,1]
+#print('setting call')
