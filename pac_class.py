@@ -13,7 +13,7 @@ class Pac:
         self.able_to_move = True
         self.speed = 2
         self.current_score =0
-        self.lives = 1
+        self.lives = 3
  
     def update(self):
         if self.able_to_move:
