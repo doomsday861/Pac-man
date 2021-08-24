@@ -2,7 +2,6 @@
 #coding: utf8 
 import pygame
 import sys
-
 from pygame.constants import KEYDOWN
 from settings import *
 import os
@@ -10,6 +9,7 @@ from pac_class import *
 from wallreader import *
 from ghost_class import *
 pygame.init()
+pygame.mixer.init()
 vec = pygame.math.Vector2
 
 
@@ -17,6 +17,7 @@ class App:
     def __init__(self):
 #        print('call init')
         self.screen = pygame.display.set_mode((WIDTH,HEIGHT)) 
+        pygame.display.set_caption('Pac-man')
         self.clock  = pygame.time.Clock()
         self.running = True
         self.state = 'start'
@@ -95,8 +96,27 @@ class App:
         for coin in self.coins:
             pygame.draw.rect(self.background,(167,179,34),(coin.x * cell_width, coin.y * cell_height,cell_width,cell_height))
 
-
-
+    def reset(self):
+        self.pac.lives = 3
+        self.pac.grid_pos = vec(P_START_POS)
+        self.pac.pix_pos = self.pac.get_pix_pos()
+        self.pac.direction *= 0
+        self.pac.current_score = 0
+        self.coins = []
+        for ghost in self.ghosts:
+            ghost.grid_pos = vec(ghost.starting_pos)
+            ghost.pix_pos = ghost.get_pix_pos()
+            ghost.direction *= 0
+        with open("walls.txt", "r") as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == '1':
+                        self.walls.append(vec(xidx, yidx))
+                    if char == 'C':
+                        self.coins.append(vec(xidx, yidx))
+                    if char in ["2", "3", "4", "5"]:
+                        self.g_pos.append([xidx, yidx])
+        self.state = 'playing'
 
 
 ###################INTRO DEFS #################
@@ -108,7 +128,9 @@ class App:
                 self.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.state = 'playing'
-    
+                pygame.mixer.music.load("sound_intro.mp3")
+                pygame.mixer.music.play()
+ 
     def start_update(self):
         pass
 
@@ -124,27 +146,6 @@ class App:
                        
         pygame.display.update()
 
-    def reset(self):
-        self.pac.lives = 3 
-        self.pac.grid_pos = vec(P_START_POS)
-        self.pac.pix_pos = self.pac.get_pix_pos()
-        self.pac.direction *=0
-        self.pac.current_score =0
-        self.coins =[]
-        for ghost in self.ghosts:
-            ghost.grid_pos = vec(ghost.starting_pos)
-            ghost.pix_pos = ghost.get_pix_pos()
-            ghost.direction *= 0
-        with open("walls.txt", "r") as file:
-            for yidx, line in enumerate(file):
-                for xidx, char in enumerate(line):
-                    if char == '1':
-                        self.walls.append(vec(xidx, yidx))
-                    if char =='C':
-                        self.coins.append(vec(xidx, yidx))
-                    if char in ["2","3","4","5"]:
-                        self.g_pos.append([xidx,yidx])
-        self.state = 'playing'
 
 ###################PLAYING DEFS #################
 
