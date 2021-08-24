@@ -80,8 +80,7 @@ class App:
             for yidx, line in enumerate(file):
                 for xidx, char in enumerate(line):
                     if char == 'B':
-                        pygame.draw.rect(
-                            self.background, BLACK, (xidx*cell_width, yidx*cell_height, cell_width, cell_height))
+                        pygame.draw.rect(self.background, BLACK, (xidx*cell_width, yidx*cell_height, cell_width, cell_height))
 
 
     def make_ghosts(self):
