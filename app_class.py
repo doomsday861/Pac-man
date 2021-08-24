@@ -196,6 +196,8 @@ class App:
     
     def remove_life(self):
         self.pac.lives -=1
+        pygame.mixer.music.load("sound_death.mp3")
+        pygame.mixer.music.play()
         if self.pac.lives == 0:
             self.state = 'game over'
         else:

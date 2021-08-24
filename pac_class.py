@@ -78,4 +78,11 @@ class Pac:
         
     def eat_coin(self):
         self.app.coins.remove(self.grid_pos)
+        # pygame.mixer.init()
+        if self.current_score % 2 == 0:
+            pygame.mixer.music.load("sound_chomp1.wav")
+        else:
+            pygame.mixer.music.load("sound_chomp2.wav")
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play()
         self.current_score +=1
