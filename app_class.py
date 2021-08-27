@@ -31,6 +31,8 @@ class App:
 #        print(self.walls)
  #       print(self.g_pos)
         self.make_ghosts()
+        pygame.mixer.music.load("sound_intro.mp3")
+        pygame.mixer.music.play()
         self.run()
 
 
@@ -127,8 +129,6 @@ class App:
                 self.running = False
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                 self.state = 'playing'
-                pygame.mixer.music.load("sound_intro.mp3")
-                pygame.mixer.music.play()
  
     def start_update(self):
         pass
