@@ -33,6 +33,35 @@ class App:
         self.make_ghosts()
         pygame.mixer.music.load("sound_intro.mp3")
         pygame.mixer.music.play()
+#######image addition lines ##########
+        self.pacmanL = []
+        self.pacmanR =[]
+        self.pacmanU =[]
+        self.pacmanD =[]
+        self.pacmanL.append(pygame.image.load(
+            'sprite_pacman_left1.png').convert_alpha())
+        self.pacmanL.append(pygame.image.load(
+            'sprite_pacman_left2.png').convert_alpha())
+        self.pacmanL.append(pygame.image.load(
+            'sprite_pacman_left3.png').convert_alpha())
+        self.pacmanR.append(pygame.image.load(
+            'sprite_pacman_right1.png').convert_alpha())
+        self.pacmanR.append(pygame.image.load(
+            'sprite_pacman_right2.png').convert_alpha())
+        self.pacmanR.append(pygame.image.load(
+            'sprite_pacman_right3.png').convert_alpha())
+        self.pacmanU.append(pygame.image.load(
+            'sprite_pacman_up1.png').convert_alpha())
+        self.pacmanU.append(pygame.image.load(
+            'sprite_pacman_up2.png').convert_alpha())
+        self.pacmanU.append(pygame.image.load(
+            'sprite_pacman_up3.png').convert_alpha())
+        self.pacmanD.append(pygame.image.load(
+            'sprite_pacman_down1.png').convert_alpha())
+        self.pacmanD.append(pygame.image.load(
+            'sprite_pacman_down2.png').convert_alpha())
+        self.pacmanD.append(pygame.image.load(
+            'sprite_pacman_down3.png').convert_alpha())
         self.run()
 
 

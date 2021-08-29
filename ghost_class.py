@@ -2,6 +2,7 @@ from settings import *
 import pygame
 import app_class
 import random
+import math
 
 vec = pygame.math.Vector2
 
@@ -16,9 +17,92 @@ class Ghost:
         self.colour = self.set_colour()
         self.direction = vec(0,0)
         self.personality = self.set_personality()
+        self.dir_giver = vec(0,0)
 #        print(self.personality)
         self.target = None
+        self.cur_frame =0
         self.speed = self.set_speed()
+        self.ghost_1L = []
+        self.ghost_1R =[]
+        self.ghost_1U =[]
+        self.ghost_1D =[]
+        self.ghost_1L.append(pygame.image.load(
+            'sprite_ghost_1_left1.png').convert_alpha())
+        self.ghost_1L.append(pygame.image.load(
+            'sprite_ghost_1_left2.png').convert_alpha())
+        self.ghost_1R.append(pygame.image.load(
+            'sprite_ghost_1_right1.png').convert_alpha())
+        self.ghost_1R.append(pygame.image.load(
+            'sprite_ghost_1_right2.png').convert_alpha())
+        self.ghost_1U.append(pygame.image.load(
+            'sprite_ghost_1_up1.png').convert_alpha())
+        self.ghost_1U.append(pygame.image.load(
+            'sprite_ghost_1_up2.png').convert_alpha())
+        self.ghost_1D.append(pygame.image.load(
+            'sprite_ghost_1_down1.png').convert_alpha())
+        self.ghost_1D.append(pygame.image.load(
+            'sprite_ghost_1_down2.png').convert_alpha())
+        self.ghost_2L = []
+        self.ghost_2R =[]
+        self.ghost_2U =[]
+        self.ghost_2D =[]
+        self.ghost_2L.append(pygame.image.load(
+            'sprite_ghost_2_left1.png').convert_alpha())
+        self.ghost_2L.append(pygame.image.load(
+            'sprite_ghost_2_left2.png').convert_alpha())
+        self.ghost_2R.append(pygame.image.load(
+            'sprite_ghost_2_right1.png').convert_alpha())
+        self.ghost_2R.append(pygame.image.load(
+            'sprite_ghost_2_right2.png').convert_alpha())
+        self.ghost_2U.append(pygame.image.load(
+            'sprite_ghost_2_up1.png').convert_alpha())
+        self.ghost_2U.append(pygame.image.load(
+            'sprite_ghost_2_up2.png').convert_alpha())
+        self.ghost_2D.append(pygame.image.load(
+            'sprite_ghost_2_down1.png').convert_alpha())
+        self.ghost_2D.append(pygame.image.load(
+            'sprite_ghost_2_down2.png').convert_alpha())
+        self.ghost_3L = []
+        self.ghost_3R =[]
+        self.ghost_3U =[]
+        self.ghost_3D =[]
+        self.ghost_3L.append(pygame.image.load(
+            'sprite_ghost_3_left1.png').convert_alpha())
+        self.ghost_3L.append(pygame.image.load(
+            'sprite_ghost_3_left2.png').convert_alpha())
+        self.ghost_3R.append(pygame.image.load(
+            'sprite_ghost_3_right1.png').convert_alpha())
+        self.ghost_3R.append(pygame.image.load(
+            'sprite_ghost_3_right2.png').convert_alpha())
+        self.ghost_3U.append(pygame.image.load(
+            'sprite_ghost_3_up1.png').convert_alpha())
+        self.ghost_3U.append(pygame.image.load(
+            'sprite_ghost_3_up2.png').convert_alpha())
+        self.ghost_3D.append(pygame.image.load(
+            'sprite_ghost_3_down1.png').convert_alpha())
+        self.ghost_3D.append(pygame.image.load(
+            'sprite_ghost_3_down2.png').convert_alpha())
+        self.ghost_4L = []
+        self.ghost_4R = []
+        self.ghost_4U = []
+        self.ghost_4D = []
+        self.ghost_4L.append(pygame.image.load(
+            'sprite_ghost_4_left1.png').convert_alpha())
+        self.ghost_4L.append(pygame.image.load(
+            'sprite_ghost_4_left2.png').convert_alpha())
+        self.ghost_4R.append(pygame.image.load(
+            'sprite_ghost_4_right1.png').convert_alpha())
+        self.ghost_4R.append(pygame.image.load(
+            'sprite_ghost_4_right2.png').convert_alpha()) 
+        self.ghost_4U.append(pygame.image.load(
+            'sprite_ghost_4_up1.png').convert_alpha())
+        self.ghost_4U.append(pygame.image.load(
+            'sprite_ghost_4_up2.png').convert_alpha())
+        self.ghost_4D.append(pygame.image.load(
+            'sprite_ghost_4_down1.png').convert_alpha())
+        self.ghost_4D.append(pygame.image.load(
+            'sprite_ghost_4_down2.png').convert_alpha())
+
 
     def update(self):
         self.target = self.set_target()
@@ -36,7 +120,89 @@ class Ghost:
                             cell_height//2)//cell_height+1
 
     def draw(self):
-        pygame.draw.circle(self.app.screen,self.colour,(int(self.pix_pos.x), int(self.pix_pos.y)),self.radius)
+        if(self.number == 0):
+            for i in range(0, 4):
+                self.current_dir = self.get_current_dir()
+                self.cur_frame += 0.004
+                if(self.cur_frame >= 2):
+                    self.cur_frame = 0
+                if self.current_dir == 'right':
+                    self.cur_image = self.ghost_1R[math.floor(self.cur_frame)]
+                if self.current_dir == 'left':
+                    self.cur_image = self.ghost_1L[math.floor(self.cur_frame)]
+                if self.current_dir == 'up':
+                    self.cur_image = self.ghost_1U[math.floor(self.cur_frame)]
+                if self.current_dir == 'down':
+                    self.cur_image = self.ghost_1D[math.floor(self.cur_frame)]
+            self.app.screen.blit(self.cur_image,
+                                 ((int(self.grid_pos[0]*cell_width+TOP_BOTTOM_MARGIN//2), int(self.grid_pos[1]*cell_height+TOP_BOTTOM_MARGIN//2))))
+        if(self.number == 1):
+            for i in range(0, 4):
+                self.current_dir = self.get_current_dir()
+                self.cur_frame += 0.004
+                if(self.cur_frame >= 2):
+                    self.cur_frame = 0
+                if self.current_dir == 'right':
+                    self.cur_image = self.ghost_2R[math.floor(self.cur_frame)]
+                if self.current_dir == 'left':
+                    self.cur_image = self.ghost_2L[math.floor(self.cur_frame)]
+                if self.current_dir == 'up':
+                    self.cur_image = self.ghost_2U[math.floor(self.cur_frame)]
+                if self.current_dir == 'down':
+                    self.cur_image = self.ghost_2D[math.floor(self.cur_frame)]
+            self.app.screen.blit(self.cur_image,
+                                 ((int(self.grid_pos[0]*cell_width+TOP_BOTTOM_MARGIN//2), int(self.grid_pos[1]*cell_height+TOP_BOTTOM_MARGIN//2))))
+                            
+        if(self.number == 2):
+            for i in range(0, 4):
+                self.current_dir = self.get_current_dir()
+                self.cur_frame += 0.004
+                if(self.cur_frame >= 2):
+                    self.cur_frame = 0
+                if self.current_dir == 'right':
+                    self.cur_image = self.ghost_3R[math.floor(self.cur_frame)]
+                if self.current_dir == 'left':
+                    self.cur_image = self.ghost_3L[math.floor(self.cur_frame)]
+                if self.current_dir == 'up':
+                    self.cur_image = self.ghost_3U[math.floor(self.cur_frame)]
+                if self.current_dir == 'down':
+                    self.cur_image = self.ghost_3D[math.floor(self.cur_frame)]
+            self.app.screen.blit(self.cur_image,
+                                 ((int(self.grid_pos[0]*cell_width+TOP_BOTTOM_MARGIN//2), int(self.grid_pos[1]*cell_height+TOP_BOTTOM_MARGIN//2))))
+
+        if(self.number == 3):
+            for i in range(0, 4):
+                self.current_dir = self.get_current_dir()
+                self.cur_frame += 0.004
+                if(self.cur_frame >= 2):
+                    self.cur_frame = 0
+                if self.current_dir == 'right':
+                    self.cur_image = self.ghost_4R[math.floor(self.cur_frame)]
+                if self.current_dir == 'left':
+                    self.cur_image = self.ghost_4L[math.floor(self.cur_frame)]
+                if self.current_dir == 'up':
+                    self.cur_image = self.ghost_4U[math.floor(self.cur_frame)]
+                if self.current_dir == 'down':
+                    self.cur_image = self.ghost_4D[math.floor(self.cur_frame)]
+            self.app.screen.blit(self.cur_image,
+                                 ((int(self.grid_pos[0]*cell_width+TOP_BOTTOM_MARGIN//2), int(self.grid_pos[1]*cell_height+TOP_BOTTOM_MARGIN//2))))
+
+
+
+
+
+    def get_current_dir(self):
+#        print(self.dir_giver)
+        if(self.dir_giver == vec(1, 0)):
+            return "right"
+        if(self.dir_giver == vec(-1, 0)):
+            return "left"
+        if(self.dir_giver == vec(0, -1)):
+            return "up"
+        if(self.dir_giver == vec(0, 1)):
+            return "down"
+        else:
+            return "right"
 
 
     def set_speed(self):
@@ -93,12 +259,14 @@ class Ghost:
 
             if vec(cur.x + self.grid_pos.x, cur.y + self.grid_pos.y) not in self.app.walls:
                 break
+        self.dir_giver = vec(x_dir,y_dir)
         return vec(x_dir,y_dir)
 
     def get_path_direction(self,target):
         curr_cell = self.next_cell(target)
         xdir = curr_cell[0] - self.grid_pos[0]
         ydir = curr_cell[1] - self.grid_pos[1]
+        self.dir_giver = vec(xdir,ydir)
         return vec(xdir, ydir)
     
     def next_cell(self,target):

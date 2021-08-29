@@ -1,7 +1,8 @@
 # Pacman
 ## An implementation of classic Pacman game using PyGame.
 
-[![PACMAN WINDOW](https://i.ibb.co/s5yJFLj/Screenshot-2021-08-23-at-11-14-50-PM.png)](https://nodesource.com/products/nsolid)
+[![PACMAN WINDOW](https://i.ibb.co/s5yJFLj/Screenshot-2021-08-23-at-11-14-50-PM.png)]
+[![GAME WINDOW](https://ibb.co/XW4DXM3)
 ## Features
 
 - Classic Pac-man maze with the original resolution
